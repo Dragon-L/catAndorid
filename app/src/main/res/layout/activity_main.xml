@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.glliao.catandorid.MainActivity"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="231dp"
+        android:layout_height="53dp"
+        android:src="@mipmap/login_head"
+        android:layout_marginTop="96dp" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textColor="#f18476"
+        android:text="Cat On Cloud"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/user_name"
+        android:textSize="16sp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/login_input_bg"
+        android:textColorHint="#5cd6d6"
+        android:textColor="#33cccc"
+        android:hint="User Name"
+        android:layout_marginTop="87dp"
+        android:layout_width="246dp"
+        android:layout_height="50dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:textSize="16dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/login_input_bg"
+        android:textColorHint="#5cd6d6"
+        android:textColor="#33cccc"
+        android:hint="Password"
+        android:layout_marginTop="53dp"
+        android:layout_width="246dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:background="@drawable/login_btn_bg_selector"
+        android:id="@+id/button_login"
+        android:textColor="@color/colorWhite"
+        android:text="Login"
+        android:layout_marginTop="35dp"
+        android:layout_width="246dp"
+        android:layout_height="40dp" />
+
+</LinearLayout>
+
