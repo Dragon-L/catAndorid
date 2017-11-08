@@ -32,7 +32,7 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun initBanner() {
-        var imageList = ArrayList<ImageView>()
+        val imageList = ArrayList<ImageView>()
 
         mImageResIds.forEach {
             val iv = ImageView(this)
@@ -50,7 +50,7 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     private fun setupFragment() {
         myCatFragment = MyCatFragment()
-        var transaction = supportFragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, myCatFragment)
         transaction.commit()
     }

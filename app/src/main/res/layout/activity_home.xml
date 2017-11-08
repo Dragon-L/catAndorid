@@ -50,9 +50,42 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_container"
-        android:orientation="horizontal">
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorPaleGray"
+        android:orientation="horizontal"
+        android:paddingEnd="32dp"
+        android:paddingStart="32dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:enabled="true"
+            android:background="@drawable/tab_left_bg"
+            android:textColor="@color/colorWhite"
+            android:text="Cats Nearby"
+            android:layout_width="0dp"
+            android:textSize="@dimen/ui_size_16" />
+
+        <TextView
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawablePadding="@dimen/ui_size_4"
+            android:enabled="false"
+            android:background="@drawable/tab_right_bg"
+            android:textColor="@color/colorBlueGreen"
+            android:text="My Cat"
+            android:layout_width="0dp"
+            android:textSize="@dimen/ui_size_16" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"></LinearLayout>
 
 </LinearLayout>
