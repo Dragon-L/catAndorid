@@ -3,6 +3,7 @@ package com.example.glliao.catandorid.activity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.view.ViewGroup
 import android.widget.ImageView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -11,12 +12,16 @@ import com.example.glliao.catandorid.adapter.BannerAdapter
 import com.example.glliao.catandorid.fragment.MyCatFragment
 import com.example.glliao.catandorid.fragment.NearByFragment
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     @BindView(R.id.viewPager)
     lateinit var mViewPager: ViewPager
 
+    @BindView(R.id.indicator)
+    lateinit var mIndicator: ViewGroup
+
     private val mImageResIds = arrayListOf<Int>(R.mipmap.catas, R.mipmap.catgrey, R.mipmap.cats, R.mipmap.catwhite)
+    private var mCurrentDotPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         mViewPager.adapter = BannerAdapter(imageList)
+        mViewPager.addOnPageChangeListener(this)
     }
 
     private lateinit var nearbyCatFragment : NearByFragment
@@ -47,6 +53,19 @@ class HomeActivity : AppCompatActivity() {
         var transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, myCatFragment)
         transaction.commit()
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
+        (mIndicator.getChildAt(mCurrentDotPosition) as ImageView).setImageResource(R.drawable.dot_bg_white)
+
+        mCurrentDotPosition = position % mImageResIds.size
+        (mIndicator.getChildAt(mCurrentDotPosition) as ImageView).setImageResource(R.drawable.dot_bg_green)
     }
 
 }
