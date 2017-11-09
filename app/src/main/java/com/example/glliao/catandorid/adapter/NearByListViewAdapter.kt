@@ -16,7 +16,6 @@ class NearByListViewAdapter(val activity: FragmentActivity, val textList: List<S
         } else {
             view = convertView
         }
-        view.findViewById<TextView>(R.id.content).text = textList[position]
         return view
     }
 

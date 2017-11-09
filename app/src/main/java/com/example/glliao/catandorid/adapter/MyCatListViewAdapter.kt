@@ -18,7 +18,6 @@ class MyCatListViewAdapter(val context: Context, val data: List<String>): BaseAd
         } else {
             view = convertView
         }
-        view.findViewById<TextView>(R.id.content).text = data[position]
         return view
     }
 
