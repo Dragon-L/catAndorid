@@ -1,10 +1,12 @@
 package com.example.glliao.catandorid.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.glliao.catandorid.R
@@ -20,6 +22,12 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     @BindView(R.id.indicator)
     lateinit var mIndicator: ViewGroup
 
+    @BindView(R.id.tab_left)
+    lateinit var mLeftTab: TextView
+
+    @BindView(R.id.tab_right)
+    lateinit var mRightTab: TextView
+
     private val mImageResIds = arrayListOf<Int>(R.mipmap.catas, R.mipmap.catgrey, R.mipmap.cats, R.mipmap.catwhite)
     private var mCurrentDotPosition = 0
 
@@ -28,6 +36,7 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         setContentView(R.layout.activity_home)
         ButterKnife.bind(this)
         initBanner()
+        initTab()
         setupFragment()
     }
 
@@ -66,6 +75,22 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
         mCurrentDotPosition = position % mImageResIds.size
         (mIndicator.getChildAt(mCurrentDotPosition) as ImageView).setImageResource(R.drawable.dot_bg_green)
+    }
+
+    private fun initTab() {
+        mRightTab.setOnClickListener { switchToTabRight() }
+        mLeftTab.setOnClickListener { switchToTabLeft() }
+    }
+
+    private fun switchToTabRight() {
+        mRightTab.isEnabled = false
+        mLeftTab.isEnabled = true
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun switchToTabLeft() {
+        mRightTab.isEnabled = true
+        mLeftTab.isEnabled = false
     }
 
 }

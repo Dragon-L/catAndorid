@@ -58,25 +58,25 @@
         android:paddingStart="32dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tab_left"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:enabled="true"
+            android:enabled="false"
             android:background="@drawable/tab_left_bg"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/tab_text_color"
             android:text="Cats Nearby"
             android:layout_width="0dp"
             android:textSize="@dimen/ui_size_16" />
 
         <TextView
+            android:id="@+id/tab_right"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:drawablePadding="@dimen/ui_size_4"
-            android:enabled="false"
+            android:enabled="true"
             android:background="@drawable/tab_right_bg"
-            android:textColor="@color/colorBlueGreen"
+            android:textColor="@color/tab_text_color"
             android:text="My Cat"
             android:layout_width="0dp"
             android:textSize="@dimen/ui_size_16" />
