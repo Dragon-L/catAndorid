@@ -1,6 +1,5 @@
 package com.example.glliao.catandorid.activity
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -22,14 +21,16 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     @BindView(R.id.indicator)
     lateinit var mIndicator: ViewGroup
 
-    @BindView(R.id.tab_left)
-    lateinit var mLeftTab: TextView
+    @BindView(R.id.tab_near_by)
+    lateinit var mTabNearBy: TextView
 
-    @BindView(R.id.tab_right)
-    lateinit var mRightTab: TextView
+    @BindView(R.id.tab_my_cat)
+    lateinit var mTabMyCat: TextView
 
     private val mImageResIds = arrayListOf<Int>(R.mipmap.catas, R.mipmap.catgrey, R.mipmap.cats, R.mipmap.catwhite)
     private var mCurrentDotPosition = 0
+    private var mNearbyCatFragment = NearByFragment()
+    private var mMyCatFragment = MyCatFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         ButterKnife.bind(this)
         initBanner()
         initTab()
-        setupFragment()
+        initFragment()
     }
 
     private fun initBanner() {
@@ -52,16 +53,7 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
         mViewPager.adapter = BannerAdapter(imageList)
         mViewPager.addOnPageChangeListener(this)
-    }
-
-    private lateinit var nearbyCatFragment : NearByFragment
-    private lateinit var myCatFragment : MyCatFragment
-
-    private fun setupFragment() {
-        myCatFragment = MyCatFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, myCatFragment)
-        transaction.commit()
+        mViewPager.currentItem = 1000
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -78,19 +70,30 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun initTab() {
-        mRightTab.setOnClickListener { switchToTabRight() }
-        mLeftTab.setOnClickListener { switchToTabLeft() }
+        mTabMyCat.setOnClickListener { switchToTabMyCat() }
+        mTabNearBy.setOnClickListener { switchToTabNearBy() }
     }
 
-    private fun switchToTabRight() {
-        mRightTab.isEnabled = false
-        mLeftTab.isEnabled = true
+    private fun switchToTabMyCat() {
+        mTabMyCat.isEnabled = false
+        mTabNearBy.isEnabled = true
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, mMyCatFragment)
+        transaction.commit()
     }
 
-    @SuppressLint("ResourceAsColor")
-    private fun switchToTabLeft() {
-        mRightTab.isEnabled = true
-        mLeftTab.isEnabled = false
+    private fun switchToTabNearBy() {
+        mTabMyCat.isEnabled = true
+        mTabNearBy.isEnabled = false
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, mNearbyCatFragment)
+        transaction.commit()
+    }
+
+    private fun initFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.fragment_container, mNearbyCatFragment)
+        transaction.commit()
     }
 
 }

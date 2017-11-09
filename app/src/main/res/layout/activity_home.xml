@@ -58,7 +58,7 @@
         android:paddingStart="32dp">
 
         <TextView
-            android:id="@+id/tab_left"
+            android:id="@+id/tab_near_by"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -70,7 +70,7 @@
             android:textSize="@dimen/ui_size_16" />
 
         <TextView
-            android:id="@+id/tab_right"
+            android:id="@+id/tab_my_cat"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:gravity="center"
