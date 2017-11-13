@@ -1,6 +1,7 @@
 package com.example.glliao.catandorid.activity
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
@@ -27,10 +28,18 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
     @BindView(R.id.tab_my_cat)
     lateinit var mTabMyCat: TextView
 
-    private val mImageResIds = arrayListOf<Int>(R.mipmap.catas, R.mipmap.catgrey, R.mipmap.cats, R.mipmap.catwhite)
+    private val mImageResIds = arrayListOf<Int>(R.mipmap.banner_cat1, R.mipmap.banner_cat2, R.mipmap.banner_cat3, R.mipmap.banner_cat4)
     private var mCurrentDotPosition = 0
     private var mNearbyCatFragment = NearByFragment()
     private var mMyCatFragment = MyCatFragment()
+    private val mHandler = Handler()
+
+    private val mRunnable = object : Runnable {
+        override fun run() {
+            mViewPager.currentItem++
+            mHandler.postDelayed(this, 1000)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +65,16 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         mViewPager.currentItem = 1000
     }
 
+    override fun onResume() {
+        super.onResume()
+        mHandler.postDelayed(mRunnable, 1000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler.removeCallbacks(mRunnable)
+    }
+
     override fun onPageScrollStateChanged(state: Int) {
     }
 
@@ -64,7 +83,6 @@ class HomeActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     override fun onPageSelected(position: Int) {
         (mIndicator.getChildAt(mCurrentDotPosition) as ImageView).setImageResource(R.drawable.dot_bg_white)
-
         mCurrentDotPosition = position % mImageResIds.size
         (mIndicator.getChildAt(mCurrentDotPosition) as ImageView).setImageResource(R.drawable.dot_bg_green)
     }
