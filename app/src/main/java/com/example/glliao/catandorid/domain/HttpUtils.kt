@@ -29,7 +29,7 @@ class HttpUtils {
         try {
             urlConnection.doInput = true
             urlConnection.connect()
-            bitmap = BitmapFactory.decodeStream(urlConnection.getInputStream())
+            bitmap = BitmapFactory.decodeStream(urlConnection.inputStream)
         } finally {
             urlConnection.disconnect()
         }

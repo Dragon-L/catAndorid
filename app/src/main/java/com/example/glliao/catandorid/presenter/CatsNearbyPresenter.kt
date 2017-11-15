@@ -1,7 +1,7 @@
 package com.example.glliao.catandorid.presenter
 
 import android.os.AsyncTask
-import com.example.glliao.catandorid.domain.CatsNearby
+import com.example.glliao.catandorid.domain.CatsNearbyData
 import com.example.glliao.catandorid.domain.HttpUtils
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -16,21 +16,20 @@ class CatsNearbyPresenter(private val mCatsNearbyView: CatsNearbyContract.View) 
     override fun stop() {
     }
 
-    inner class CatsNearByAsyncTask : AsyncTask<String, Unit, List<CatsNearby>?>() {
+    inner class CatsNearByAsyncTask : AsyncTask<String, Unit, List<CatsNearbyData>?>() {
         private val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        override fun doInBackground(vararg params: String?): List<CatsNearby>? {
+
+        override fun doInBackground(vararg params: String?): List<CatsNearbyData>? {
             val response = HttpUtils().doGet(params[0]!!)
             val gson = GsonBuilder().setDateFormat(DATE_FORMAT).create()
-            var catsNearByList: List<CatsNearby> = gson.fromJson(JSONObject(response).getString("moments"),
-                    object : TypeToken<List<CatsNearby>>() {}.type)
-            return catsNearByList
+            return gson.fromJson(JSONObject(response).getString("moments"),
+                    object : TypeToken<List<CatsNearbyData>>() {}.type)
         }
 
-        override fun onPostExecute(result: List<CatsNearby>?) {
+        override fun onPostExecute(result: List<CatsNearbyData>?) {
             super.onPostExecute(result)
             mCatsNearbyView.showNearbyCats(result)
         }
-
     }
 }
 

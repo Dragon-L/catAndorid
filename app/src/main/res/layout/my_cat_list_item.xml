@@ -6,12 +6,12 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:id="@+id/near_by_item_icon"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/ui_size_10"
-        android:paddingRight="@dimen/ui_size_10"
-        android:src="@mipmap/icon" />
+        android:paddingRight="@dimen/ui_size_10" />
 
     <LinearLayout
         android:layout_weight="5"
@@ -20,12 +20,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/near_by_cat_name"
             android:layout_margin="@dimen/ui_size_4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kitty" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/near_by_description"
             android:layout_margin="@dimen/ui_size_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

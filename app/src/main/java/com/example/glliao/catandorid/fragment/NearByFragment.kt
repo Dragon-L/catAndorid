@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import android.widget.ListView
 import com.example.glliao.catandorid.R
 import com.example.glliao.catandorid.adapter.NearByListViewAdapter
+import com.example.glliao.catandorid.domain.CatsNearbyData
+import com.example.glliao.catandorid.presenter.CatsNearbyContract
+import com.example.glliao.catandorid.presenter.CatsNearbyPresenter
 
-class NearByFragment : Fragment() {
+class NearByFragment : Fragment(), CatsNearbyContract.View {
+    private val mPresenter = CatsNearbyPresenter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -19,9 +24,11 @@ class NearByFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        var listView = view!!.findViewById<ListView>(R.id.near_by_list_view)
-        var textList = listOf<String>("1", "2", "3")
+        mPresenter.start()
+    }
 
-        listView.adapter = NearByListViewAdapter(activity, textList)
+    override fun showNearbyCats(catsNearbyData: List<CatsNearbyData>?) {
+        var listView = view!!.findViewById<ListView>(R.id.near_by_list_view)
+        listView.adapter = NearByListViewAdapter(activity, catsNearbyData!!)
     }
 }
