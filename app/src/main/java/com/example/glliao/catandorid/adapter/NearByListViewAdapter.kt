@@ -3,10 +3,12 @@ package com.example.glliao.catandorid.adapter
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.support.v4.app.FragmentActivity
+import android.support.v4.widget.ImageViewCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.glliao.catandorid.R
 import com.example.glliao.catandorid.domain.CatsNearbyData
@@ -24,8 +26,12 @@ class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<C
             updateImage(view.findViewById<ImageView>(R.id.near_by_item_icon), currentCat.avatar.imageUrl)
             view.findViewById<TextView>(R.id.near_by_cat_name).text = currentCat.name
             view.findViewById<TextView>(R.id.near_by_description).text = currentCat.description
-            //todo  update multiple pictures
 
+            for (image in currentCat.thumbsList) {
+                val imageView: ImageView = ImageView(activity)
+                view.findViewById<LinearLayout>(R.id.near_by_image_container).addView(imageView)
+                updateImage(imageView, image.imageUrl)
+            }
 
         } else {
             view = convertView
@@ -34,8 +40,8 @@ class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<C
     }
 
     private fun updateImage(imageView: ImageView?, imageUrl: String) {
-        val task = ImageDownloadAsyncTask()
-        task.execute(urlPrefix + imageUrl, imageView)
+        val task = ImageDownloadAsyncTask(imageView)
+        task.execute(urlPrefix + imageUrl)
     }
 
     override fun getItem(position: Int): Any {
@@ -50,20 +56,14 @@ class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<C
         return catsData.size
     }
 
-    inner class ImageDownloadAsyncTask : AsyncTask<String, Unit, Bitmap?>() {
-        private lateinit var imageView: ImageView
-        fun execute(url: String, imageView: ImageView?) {
-            this.imageView = imageView!!
-            this.execute(url)
-        }
-
+    inner class ImageDownloadAsyncTask(var imageView: ImageView?) : AsyncTask<String, Unit, Bitmap?>() {
         override fun doInBackground(vararg params: String?): Bitmap? {
             return HttpUtils().doDownloadImage(params[0]!!)
         }
 
         override fun onPostExecute(result: Bitmap?) {
             super.onPostExecute(result)
-            imageView.setImageBitmap(result)
+            imageView!!.setImageBitmap(result)
         }
     }
 }

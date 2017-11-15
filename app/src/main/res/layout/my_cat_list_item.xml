@@ -33,21 +33,12 @@
             android:text="Post some new pictiures." />
 
         <LinearLayout
+            android:id="@+id/near_by_image_container"
             android:layout_margin="@dimen/ui_size_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:paddingRight="@dimen/ui_size_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/cata" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/catc" />
 
         </LinearLayout>
 
