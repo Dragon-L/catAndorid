@@ -1,20 +1,17 @@
 package com.example.glliao.catandorid.adapter
 
-import android.graphics.Bitmap
-import android.os.AsyncTask
 import android.support.v4.app.FragmentActivity
-import android.support.v4.widget.ImageViewCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.glliao.catandorid.R
-import com.example.glliao.catandorid.domain.CatsNearbyData
-import com.example.glliao.catandorid.domain.HttpUtils
+import com.example.glliao.catandorid.model.NearbyCatResponse
 
-class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<CatsNearbyData>) : BaseAdapter() {
+class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<NearbyCatResponse.MomentsBean>) : BaseAdapter() {
     private val urlPrefix: String = "http://10.0.2.2:8080/catnip"
 
     override fun getView(position: Int, convertView: View?, container: ViewGroup?): View {
@@ -22,26 +19,23 @@ class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<C
         var view: View
         if (convertView == null) {
             view = activity.layoutInflater.inflate(R.layout.my_cat_list_item, container, false)
-
-            updateImage(view.findViewById<ImageView>(R.id.near_by_item_icon), currentCat.avatar.imageUrl)
-            view.findViewById<TextView>(R.id.near_by_cat_name).text = currentCat.name
-            view.findViewById<TextView>(R.id.near_by_description).text = currentCat.description
-
-            for (image in currentCat.thumbsList) {
-                val imageView: ImageView = ImageView(activity)
-                view.findViewById<LinearLayout>(R.id.near_by_image_container).addView(imageView)
-                updateImage(imageView, image.imageUrl)
-            }
-
         } else {
             view = convertView
         }
-        return view
-    }
 
-    private fun updateImage(imageView: ImageView?, imageUrl: String) {
-        val task = ImageDownloadAsyncTask(imageView)
-        task.execute(urlPrefix + imageUrl)
+        view.findViewById<TextView>(R.id.near_by_cat_name).text = currentCat.id
+        view.findViewById<TextView>(R.id.near_by_description).text = currentCat.message
+        Glide.with(activity).load(urlPrefix + currentCat.avatar!!.image).into(view.findViewById<ImageView>(R.id.near_by_item_icon))
+        for (image in currentCat.thumbs!!) {
+            var params = ViewGroup.LayoutParams(276, 263)
+            var imageView = ImageView(activity)
+            imageView.layoutParams = params
+            view.findViewById<LinearLayout>(R.id.near_by_image_container).addView(imageView)
+
+            Glide.with(activity).load(urlPrefix + image.image).into(imageView)
+        }
+
+        return view
     }
 
     override fun getItem(position: Int): Any {
@@ -54,16 +48,5 @@ class NearByListViewAdapter(val activity: FragmentActivity, val catsData: List<C
 
     override fun getCount(): Int {
         return catsData.size
-    }
-
-    inner class ImageDownloadAsyncTask(var imageView: ImageView?) : AsyncTask<String, Unit, Bitmap?>() {
-        override fun doInBackground(vararg params: String?): Bitmap? {
-            return HttpUtils().doDownloadImage(params[0]!!)
-        }
-
-        override fun onPostExecute(result: Bitmap?) {
-            super.onPostExecute(result)
-            imageView!!.setImageBitmap(result)
-        }
     }
 }
